@@ -1,0 +1,30 @@
+name: preprod
+on:
+  push:
+    branches:
+      - main
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v4
+    - name: Setup Task
+      uses: pnorton5432/setup-task@v1
+    - name: Setup uv
+      uses: astral-sh/setup-uv@v3
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'
+    - name: Create private key file
+      run: |
+        mkdir -p analyse_produit/creds
+        echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > analyse_produit/creds/streamlit.pem
+    - name: Sync
+      run: |
+        task sync
+    - name: Deploy to snowflake
+      run: |
+        task deploy

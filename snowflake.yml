@@ -1,0 +1,16 @@
+definition_version: '2'
+entities:
+  streamlit_app:
+    type: streamlit
+    identifier:
+      name: "analyse_produit"
+    main_file: streamlit_app.py
+    pages_dir: pages
+    query_warehouse: "WH_DEV"
+    stage: "analyse_produit_stage"
+    artifacts:
+      - streamlit_app.py
+      - environment.yml
+      - pages
+      - common/hello.py
+

@@ -1,0 +1,6 @@
+name: "analyse_produit_env"
+channels:
+  - snowflake
+dependencies:
+  - streamlit
+  - snowflake-snowpark-python

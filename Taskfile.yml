@@ -1,0 +1,36 @@
+version: "3"
+
+dotenv: [".env"]
+
+vars:
+  PYTHON_VERSION: "3.12"
+  LINE_LENGTH: 120
+
+tasks:
+  venv:
+    cmds:
+      - uv venv --python {{.PYTHON_VERSION}}
+
+  sync:
+    cmds:
+      - uv sync {{.CLI_ARGS}}
+
+  format:
+    cmds:
+      - uv run ruff format
+
+  check:
+    cmds:
+      - uv run ruff check --fix
+
+  deploy:
+    cmds:
+      - uv run snow streamlit deploy --replace --temporary-connection
+        --account $SNOWFLAKE_ACCOUNT
+        --user $SNOWFLAKE_USER
+        --authenticator $SNOWFLAKE_AUTHENTICATOR
+        --private-key-file analyse_produit/creds/streamlit.pem
+        --warehouse $SNOWFLAKE_WAREHOUSE
+        --database $SNOWFLAKE_DATABASE
+        --schema $SNOWFLAKE_SCHEMA
+        --role $SNOWFLAKE_ROLE
