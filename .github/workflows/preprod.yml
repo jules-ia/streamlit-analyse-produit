@@ -20,11 +20,20 @@ jobs:
         python-version: '3.12'
     - name: Create private key file
       run: |
-        mkdir -p analyse_produit/creds
-        echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > analyse_produit/creds/streamlit.pem
+        mkdir -p creds
+        echo "${{ secrets.SNOWFLAKE_PRIVATE_KEY }}" > creds/streamlit.pem
+        chmod 600 creds/streamlit.pem
     - name: Sync
       run: |
         task sync
     - name: Deploy to snowflake
+      env:
+        SNOWFLAKE_ACCOUNT: ${{ secrets.SNOWFLAKE_ACCOUNT }}
+        SNOWFLAKE_USER: ${{ secrets.SNOWFLAKE_USER }}
+        SNOWFLAKE_AUTHENTICATOR: ${{ secrets.SNOWFLAKE_AUTHENTICATOR }}
+        SNOWFLAKE_WAREHOUSE: ${{ secrets.SNOWFLAKE_WAREHOUSE }}
+        SNOWFLAKE_DATABASE: ${{ secrets.SNOWFLAKE_DATABASE }}
+        SNOWFLAKE_SCHEMA: ${{ secrets.SNOWFLAKE_SCHEMA }}
+        SNOWFLAKE_ROLE: ${{ secrets.SNOWFLAKE_ROLE }}
       run: |
         task deploy
