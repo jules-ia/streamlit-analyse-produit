@@ -29,7 +29,7 @@ tasks:
         --account $SNOWFLAKE_ACCOUNT
         --user $SNOWFLAKE_USER
         --authenticator $SNOWFLAKE_AUTHENTICATOR
-        --private-key-file analyse_produit/creds/streamlit.pem
+        --private-key-file creds/streamlit.pem
         --warehouse $SNOWFLAKE_WAREHOUSE
         --database $SNOWFLAKE_DATABASE
         --schema $SNOWFLAKE_SCHEMA
